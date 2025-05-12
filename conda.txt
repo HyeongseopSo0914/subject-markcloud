@@ -1,0 +1,4 @@
+    conda init
+    conda create --name NAME 
+    conda remove --name NAME --all
+    conda activate NAME

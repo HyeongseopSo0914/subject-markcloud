@@ -4,4 +4,4 @@ pandas
 numpy
 g2pk
 unidecode
-koroman
+korean_romanizer
