@@ -75,12 +75,14 @@ def fill_step1(df):
 def fill_step2(df):
     df['aD'] = df['aD'].apply(safe_to_datetime)
     df['pD'] = df['pD'].apply(safe_to_datetime)
-    df['rD_flat'] = df['rD'].apply(
+    # rD는 list형이므로 첫번째값만 꺼내서 datetime 변환
+    df['rD_flat'] = df['rD'].apply( 
         lambda x: safe_to_datetime(x[0]) if isinstance(x, list) and x else pd.NaT
     )
 
     mask = df['rS'].isin(['등록', '실효'])
 
+    # 정상적인 날짜 data 필터링(aD, pD)
     valid_pD = df[mask & df['aD'].notnull() & df['pD'].notnull() & (df['pD'] > df['aD'])]
     valid_rD = df[mask & df['aD'].notnull() & df['rD_flat'].notnull() & (df['rD_flat'] > df['aD'])]
 
@@ -285,13 +287,14 @@ df_s.drop(columns=cols_to_drop, inplace=True)
 # 날짜기준 정렬
 df_ss = df_s.sort_values(by='aD')
 
-# 결측치 처리 완료 후
+# 결측치 처리
 df_clean = run_steps(df_s)
+#df_clean = run_steps(df_ss)
 
 # 최종 출력용 데이터프레임 변환
 df_final = to_final_output(df_clean)
 
-# 저장
+# 저장 및 디버그용
 #df_final.to_json("home_final_sample.json", orient="records", force_ascii=False, indent=2)
 
 # main.py import

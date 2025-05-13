@@ -52,14 +52,18 @@ def search_trademarks(
         description="출원 연도 (ex: 2000)"
     )
 ):
+    # 원본 유지
     df_filtered = df_final.copy()
     
+    # 부분 일치 검색
     if productName:
         df_filtered = df_filtered[df_filtered["productName"].str.contains(productName, na=False)]
 
+    # 정확히 일치
     if registerStatus:
         df_filtered = df_filtered[df_filtered["registerStatus"] == registerStatus]
-            
+    
+    # 정확히 일치하는 년도        
     if year:
         df_filtered = df_filtered[df_filtered["applicationDate"].str.startswith(str(year))]
 
