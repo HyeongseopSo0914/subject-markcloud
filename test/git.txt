@@ -11,6 +11,10 @@ cd repository
 git fetch origin
 git pull origin main
 ---------------------------------------------------------
+git rm -r --cached __pycache__/
+git commit -m "message"
+git push origin main
+---------------------------------------------------------
 pip install -r requirements.txt
 uvicorn main:app --reload
 http://127.0.0.1:8000/docs
